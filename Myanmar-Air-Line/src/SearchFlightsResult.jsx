@@ -12,7 +12,7 @@ function SearchFlightsResult() {
     const navigate=useNavigate();
     async function fetchFlights(){
       try{
-        const response=await fetch(`http://localhost:3000/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.departureDate}`);
+        const response=await fetch(`http://localhost:3000/api/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.departureDate}`);
         const data=await response.json();
         setData(data);
     }catch(error){

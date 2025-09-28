@@ -3,6 +3,7 @@ import Header from './components/Header';
 import BookingTaskbar from './components/BookingTaskbar';
 import BackgroundImageSlider from './components/BackgroundImageSlider';
 import Footer from './components/Footer';
+import {useNavigate} from 'react-router-dom';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
       <Footer />
     </div>
   );
+
 }
 
 export default App;

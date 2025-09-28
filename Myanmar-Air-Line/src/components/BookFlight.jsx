@@ -8,7 +8,7 @@ function BookFlight(){
     const [flightDetail,setFlightDetail]=React.useState({});   
     async function fetchFlightById(flightId){
         try{
-            const response=await fetch(`http://localhost:3000/searchFlightById?flightId=${flightId}`);
+            const response=await fetch(`http://localhost:3000/api/searchFlightById?flightId=${flightId}`);
             const data=await response.json();
             setFlightDetail(data);
         }catch(error){
