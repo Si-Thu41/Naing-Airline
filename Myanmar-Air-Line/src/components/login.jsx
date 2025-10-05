@@ -1,7 +1,32 @@
 import Footer from "./Footer";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-    return <div className="flex flex-col min-h-screen">
+    const [isAuthenticated, setIsAuthenticated] = React.useState(null);
+    const navigate = useNavigate();
+        React.useEffect(() => {
+        try{fetch("http://localhost:3000/checkAuth", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.isLoggedIn) {
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
+            }
+        })}catch(error){
+            console.log("Error in Login Page:",error);
+            setIsAuthenticated(false);
+        }
+    }, []);
+    if (isAuthenticated) {
+        navigate("/", { replace: true });
+        return null;
+    }
+    return (<div className="flex flex-col min-h-screen">
     <div className="flex-1 w-full md:w-[50%] text-center mt-20 md:mt-[25%] xl:mt-[18%] flex flex-col items-center mx-auto">
         <p className="sm:text-3xl text-4xl">Welcome to <img src="naing-high-resolution-logo-transparent.png" alt="Logo" className="w-[100px] inline" /></p>
         <a href="http://localhost:3000/auth/google">
@@ -11,7 +36,7 @@ function Login() {
         </a>
     </div>
     <Footer />
-    </div>;
+    </div>);
 }
 
 export default Login;

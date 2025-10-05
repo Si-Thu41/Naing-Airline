@@ -14,7 +14,8 @@ app.use(cors({
   origin: 'http://localhost:5173',
   credentials: true
 }));
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(session({
   name: "loginCookie",
   secret:"mysecretkey",
@@ -30,10 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 const PORT = process.env.PORT;
 
-app.use(express.urlencoded({ extended: true }));
-
-
-app.use("/api",router);
+app.use("/api",router); //API routes
 
 app.get('/auth/google',passport.authenticate('google',{
     scope:['profile','email']
@@ -57,10 +55,9 @@ passport.use('google',new GoogleOAuth.Strategy({
   }
 }));
 app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:5173' }),
+  passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login' }),
   function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('http://localhost:5173/loggedin');
+    res.redirect('http://localhost:5173/'); // Successful authentication, redirect home.
   });
 
   passport.serializeUser((user, done) => { // Storing user info in session
@@ -95,6 +92,28 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.post('/api/confirmBooking', async (req, res) => {
+  if(req.user){
+    const user_id= parseInt(req.user.user_id);
+    try{
+    const {name,passportNumber,flight_id,}=req.body;
+    const flightId=parseInt(flight_id);
+    const insertBookingQuery=await pool.query("INSERT INTO bookings (customername, passportnumber, flight_id, user_id) VALUES ($1,$2,$3,$4) RETURNING *",[name,passportNumber,flightId,user_id]);
+    res.json(insertBookingQuery.rows[0]);
+  }catch(error){
+    console.error('Error confirming booking:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  }else{
+    res.status(401).json({ error: 'Unauthorized' });
+
+  }
+});
+
+app.get('/test-cookie', (req, res) => {
+  req.session.test = "hello";
+  res.send("Test cookie set");
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}. http://localhost:${PORT}/`);
 });

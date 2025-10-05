@@ -1,8 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import {Blocks} from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(null);
+    const [isAuthenticated, setIsAuthenticated] = React.useState(true);
+    const navigate = useNavigate();
+    const location = useLocation();
     React.useEffect(() => {
     try{fetch("http://localhost:3000/checkAuth", {
         method: "GET",
@@ -21,9 +26,19 @@ function PrivateRoute({ children }) {
     }
 }, []);
     if (isAuthenticated === null) {
-        return null; // or a loading spinner
+        return <div className="flex justify-center items-center h-screen">
+            <Blocks
+  height="80"
+  width="80"
+  color="#e27012ff"
+  ariaLabel="blocks-loading"
+  wrapperStyle={{}}
+  wrapperClass="blocks-wrapper"
+  visible={true}
+  />;
+        </div>
     }
-    return isAuthenticated ? children : <Navigate to="/" replace />;
+    return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
 export default PrivateRoute;

@@ -3,8 +3,19 @@ import { getCity,searchFlight,searchFlightById } from './controllers.js';
 
 const router=express.Router();
 
-router.get('/cities', getCity);
-router.get('/searchFlight', searchFlight);
-router.get('/searchFlightById', searchFlightById);
+function ensureAuthenticated(req, res, next) {
+  if (req.user) {
+    return next();
+  }
+  res.status(401).json({ error: "Unauthorized" });
+}
+router.get('/cities', ensureAuthenticated, getCity);
+router.get('/searchFlight', ensureAuthenticated, searchFlight);
+router.get('/searchFlightById', ensureAuthenticated, searchFlightById);
+
+//Uncomment this to test without authentication
+// router.get('/cities', getCity);
+// router.get('/searchFlight', searchFlight);
+// router.get('/searchFlightById', searchFlightById);
 
 export default router;

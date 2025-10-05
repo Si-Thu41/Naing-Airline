@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function BookingTaskbar(props) {
   const elements = props;
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   function handleClick(index) {
     setActiveIndex(index);

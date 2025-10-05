@@ -4,18 +4,21 @@ import './index.css'
 import App from './App.jsx'
 import SearchFlightsResult from './SearchFlightsResult.jsx';
 import BookFlight from './components/BookFlight.jsx';
+import BookingComplete from './components/BookingComplete.jsx';
 import { BrowserRouter, Routes, Route } from "react-router";
 import Login from './components/login.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-
+import ErrorPage from './Error.jsx';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Login/>} />
-      <Route path="/loggedin" element={<PrivateRoute><App /></PrivateRoute>} />
+      <Route path="/login" element={<Login/>} />
+      <Route path="/" element={<PrivateRoute><App /></PrivateRoute>} />
       <Route path="/searchFlight" element={<PrivateRoute><SearchFlightsResult /></PrivateRoute>} />
       <Route path="/bookFlight" element={<PrivateRoute><BookFlight /></PrivateRoute>} />
+      <Route path="/bookingComplete" element={<PrivateRoute><BookingComplete /></PrivateRoute>} />
+      <Route path="/error" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>,
 )
