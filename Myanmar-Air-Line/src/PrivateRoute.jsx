@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-    const [isAuthenticated, setIsAuthenticated] = React.useState(true);
+    const [isAuthenticated, setIsAuthenticated] = React.useState(null);
     const navigate = useNavigate();
     const location = useLocation();
     React.useEffect(() => {
@@ -16,8 +16,10 @@ function PrivateRoute({ children }) {
     .then(response => response.json())
     .then(data => {
         if (data.isLoggedIn) {
+            console.log("User is authenticated");
             setIsAuthenticated(true);
         } else {
+            console.log("User is not authenticated");
             setIsAuthenticated(false);
         }
     })}catch(error){

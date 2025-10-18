@@ -9,12 +9,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import SearchFlight from './components/SearchFlight';
 import {MagnifyingGlass} from 'react-loader-spinner';
+import { fetchCityList } from './Functions/getCities';
 
 function SearchFlightsResult() {
     const location = useLocation();
     const [flight, setFlight] = React.useState([]);
     const bookingdetails = location.state;
-    const [cities, setCities] = React.useState([]);
+    const [cities, setCityList] = React.useState([]);
     const [showFlightDetail, setShowFlightDetail] = React.useState(false);
     const [showEditFlight, setShowEditFlight] = React.useState(false);
     const [dataToDisplay, setDataToDisplay] = React.useState(null);
@@ -23,7 +24,10 @@ function SearchFlightsResult() {
 
     async function fetchFlights() {
         try {
-            const response = await fetch(`http://localhost:3000/api/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.flightdate}`);
+            const response = await fetch(`http://localhost:3000/api/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.flightdate}`,{
+                method: "GET",
+                credentials: "include"
+            });
             if (response.ok) {
                 const data = await response.json();
                 setFlight(data);
@@ -36,28 +40,19 @@ function SearchFlightsResult() {
         }
     }
 
-    async function fetchCityName() {
-        try {
-            const response = await fetch(`http://localhost:3000/api/cities`);
-            if (response.ok) {
-                const data = await response.json();
-                setCities(data);
-            } else {
-                navigate('/error', { state: { error: response.statusText, status: response.status } });
-            }
-        } catch (error) {
-            console.error("Error fetching city name:", error);
-            navigate('/error', { state: { error: "Error fetching city name", status: 500 } });
-        }
-    }
-
     async function loadData() {
         setLoading(true);
-        await Promise.all([fetchFlights(), fetchCityName()]);
-        setTimeout(() => setLoading(false), 3000); // Simulate a short delay for better UX
+        await Promise.all([fetchFlights()]);
+        setTimeout(() => setLoading(false), 1000); // Simulate a short delay for better UX
     }
 
     React.useEffect(() => {
+       const fetchData = async () => {
+            const result = await fetchCityList();
+            if (!result.cityListFetcherror) setCityList(result.cities);
+            else navigate('/error', { state: { error: result.cityListFetcherror || "Unknown error" } });
+          };
+        fetchData();
         loadData();
         setShowEditFlight(false);
     }, [bookingdetails]);

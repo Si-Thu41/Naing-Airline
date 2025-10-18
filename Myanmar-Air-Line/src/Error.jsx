@@ -1,25 +1,26 @@
-import "./error.css";
+
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function ErrorPage() {
     const navigate = useNavigate();
     const location = useLocation();
     const errorInfo = location.state || {};
-    console.error("Error Page Info:", errorInfo);
     const handleNavigation = () => {
         navigate("/");
     };
 
     return(
-        <div id="notfound">
-            <div className="notfound">
-                <div className="notfound404">
-                    <h1>{errorInfo.status}</h1>
-                    <h2>{errorInfo.error || "Page not found"}</h2>
-                </div>
-                <a onClick={handleNavigation} className="cursor-pointer">Homepage</a>
-            </div>
+        <div className="flex flex-col min-h-screen" >
+            <Header />
+            <main className="flex-1 flex flex-col justify-center items-center ">
+                <h1 className="font-bold text-3xl">Error {errorInfo.error.status || 404}</h1>
+                <p>{errorInfo.error.errorMessage || "Page not found"}</p>
+                <button onClick={handleNavigation} className="bg-blue-500 p-2 rounded-md text-white cursor-pointer hover:bg-blue-400" >Go to Homepage</button>
+            </main>
+            <Footer />
         </div>
     );
 }
