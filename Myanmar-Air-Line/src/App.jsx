@@ -14,10 +14,13 @@ function App() {
     "/backgroundAds/background3.jpg"
   ];
   const cityPhotos=[
-    {cityName: "Yangon", photoUrl: "/Yangon.jpg"},
-    {cityName: "Mandalay", photoUrl: "/Mandalay.jpg"},
-    {cityName: "Naypyitaw", photoUrl: "/Naypyitaw.jpg"},
-    {cityName: "Bago", photoUrl: "/Bago.jpg"},];
+    {cityName: "Yangon", photoUrl: "/Yangon.jpg",key:1},
+    {cityName: "Mandalay", photoUrl: "/Mandalay.jpg",key:2},
+    {cityName: "Naypyitaw", photoUrl: "/Naypyitaw.jpg",key:3},
+    {cityName: "Bago", photoUrl: "/Bago.jpg",key:4},
+    {cityName: "Singapore", photoUrl: "/Singapore.jpg",key:5},
+    {cityName: "Bangkok", photoUrl: "/Bangkok.jpg",key:6},
+  ];
 
   return (
     <div className='flex flex-col min-h-screen'>
@@ -28,10 +31,7 @@ function App() {
         <div className='mt-10'>
           <h1 className='text-bold text-4xl text-center'>Explore our destinations</h1>
           <div className='w-[50%] mx-auto grid grid-cols-2 gap-2 justify-items-center mt-10 mb-10'>
-            <Destinations image={cityPhotos[0]} className="order-1 w-1/2 " />
-            <Destinations image={cityPhotos[1]} className="order-2 w-1/2" />
-            <Destinations image={cityPhotos[2]} className="order-3 w-1/2" />
-            <Destinations image={cityPhotos[3]} className="order-4 w-1/2" />
+            {cityPhotos.map(c=><Destinations key={c.key} image={c} className="w-1/2" />)}
           </div>
         </div>
        

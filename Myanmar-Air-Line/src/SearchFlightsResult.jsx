@@ -58,7 +58,13 @@ function SearchFlightsResult() {
     }, [bookingdetails]);
 
     function handleBookFlight(flight_id, travelClass, departureCity, arrivalCity) {
-        navigate('/bookFlight', { state: { flight_id, travelClass, departureCity, arrivalCity } });
+        let flightType="";
+        if(flight.departureCityType===flight.arrivalCityType){
+            flightType=flight.departureCityType;
+        }else{
+            flightType="Foreign";
+        }
+        navigate('/bookFlight', { state: { flight_id, travelClass, departureCity, arrivalCity, passengercount: bookingdetails.passengerCount, flightType } });
     }
     function displayFlightDetail(id) {
         const flightDetail = flight.find(f => f.flight_id === id);

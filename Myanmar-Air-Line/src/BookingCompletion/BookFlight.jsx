@@ -2,6 +2,9 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { fetchCityList } from '../Functions/getCities';
+import TravelerInfoForm from './TravelerInfoForm';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function BookFlight(){
     const location=useLocation();
@@ -9,6 +12,7 @@ function BookFlight(){
     const bookingDetail=location.state;
     const [cities, setCities] = React.useState([]); 
     const [flightDetail,setFlightDetail]=React.useState({});
+    const [passengerArray,setPassengerArray]=React.useState([]);
     
     async function fetchFlightById(flightId){
         try{
@@ -34,26 +38,26 @@ function BookFlight(){
             }
         }
         fetchCity();
+        let passengers=[];
+        for(let i=1;i<=bookingDetail.passengercount;i++){
+            passengers.push(i);
+        }
+        setPassengerArray(passengers);
     },[]);
 
     React.useEffect(() => { //Set values for formData once the DOM is loaded
-        setFormData(prev => ({
-            ...prev,
-            departureCity: cities.find(c=>c.city_id===bookingDetail.departureCity)?.cityname || "Unknown City",
-            arrivalCity: cities.find(c=>c.city_id===bookingDetail.arrivalCity)?.cityname || "Unknown City",
-            flightNumber: flightDetail.flight_number || '',
-            flight_id: bookingDetail.flight_id || '',
-            travelClass: bookingDetail.travelClass || '',
-            price: bookingDetail.travelClass==="economy"
-                ? (flightDetail.economyprice ? flightDetail.economyprice : "")
-                : bookingDetail.travelClass==="business"
-                    ? (flightDetail.businessprice ? flightDetail.businessprice : "")
-                    : ""
-        }));
+        console.log(bookingDetail.passengercount);
     }, [cities, flightDetail, bookingDetail]); // Update formData when cities or flightDetail change
 
-    return <div>
-        
+    return  <div className='flex flex-col min-h-screen'>
+          <Header />
+          <main className='flex-1 flex flex-col items-center gap-6 py-6'>
+            {passengerArray.length==1?<TravelerInfoForm passengerNumber={null} flightType={bookingDetail.flightType} travelClass={bookingDetail.travelClass} flightId={bookingDetail.flight_id}/> : passengerArray.map((passengerNumber)=>
+            <TravelerInfoForm key={passengerNumber} passengerNumber={passengerNumber} flightType={bookingDetail.flightType} travelClass={bookingDetail.travelClass} flightId={bookingDetail.flight_id}/>
+            )}
+            <button className='cursor-pointer bg-blue-700 rounded-md p-2' onClick={()=>{navigate("/payment")}}>Confirm</button>
+          </main>
+        <Footer />
     </div>;
 }
 

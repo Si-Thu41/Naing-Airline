@@ -1,13 +1,9 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import {Blocks} from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 
 function PrivateRoute({ children }) {
     const [isAuthenticated, setIsAuthenticated] = React.useState(null);
-    const navigate = useNavigate();
-    const location = useLocation();
     React.useEffect(() => {
     try{fetch("http://localhost:3000/checkAuth", {
         method: "GET",

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getCity,searchFlight,searchFlightById } from './controllers.js';
+import { getCity,searchFlight,searchFlightById,saveTravelerInfo,bookFlight } from './controllers.js';
 
 const router=express.Router();
 
@@ -12,10 +12,15 @@ function ensureAuthenticated(req, res, next) {
 router.get('/cities', ensureAuthenticated, getCity);
 router.get('/searchFlight', ensureAuthenticated, searchFlight);
 router.get('/searchFlightById', ensureAuthenticated, searchFlightById);
+router.post('/saveTravelerInfo', ensureAuthenticated, saveTravelerInfo);
+router.post('/bookFlight', ensureAuthenticated, bookFlight);
 
 //Uncomment this to test without authentication
 // router.get('/cities', getCity);
 // router.get('/searchFlight', searchFlight);
 // router.get('/searchFlightById', searchFlightById);
+// router.post('/saveTravelerInfo', saveTravelerInfo);
+// router.post('/bookFlight', bookFlight);
+
 
 export default router;
