@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId}) {
+function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId,multiplePassenger,checkSavePassengerInfo,toggleConfirmButton}) {
     const [formData, setFormData] = React.useState({
         flight_id: flightId,
         travelClass: travelClass,
@@ -21,6 +21,10 @@ function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId}) {
     }
     async function handleSubmit(event) {
         event.preventDefault();
+        if(formData.title==='' || formData.firstName==='' || formData.lastName===''){
+            alert("Please fill all the required fields.");
+            return;
+        }
         await fetch('http://localhost:3000/api/saveTravelerInfo', {
             method: 'POST',
             credentials: 'include',
@@ -29,10 +33,12 @@ function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId}) {
             },
             body: JSON.stringify(formData)
         });
+        checkSavePassengerInfo(passengerNumber-1);
+        toggleConfirmButton();
     }
     return (
         <div className='border border-gray-300 rounded-xl w-2/3 p-3 shadow-md/20 '>
-        <h1 className='text-xl text-blue-400 font-semibold py-2'>Passenger {passengerNumber !== null ? passengerNumber : ''}</h1>
+        <h1 className='text-xl text-blue-400 font-semibold py-2'>Passenger {multiplePassenger ? passengerNumber : ''}</h1>
         <hr className='bg-gray-400 border-gray-400' />
         <h1 className='text-blue-400 font-semibold py-2'>Personal Information</h1>
 

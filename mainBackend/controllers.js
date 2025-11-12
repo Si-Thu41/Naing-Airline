@@ -50,7 +50,6 @@ export const saveTravelerInfo= async (req,res)=>{ //Save the traveler info in se
     console.error('Error saving traveler info:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-  
 }
 
 export const bookFlight= async (req,res)=>{
@@ -67,6 +66,16 @@ export const bookFlight= async (req,res)=>{
     }
   }catch(error){
     console.error('Error booking flight:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export const seeBookings= async (req,res)=>{
+  try{
+    const {user_id}= req.user
+    const response= await pool.query(`SELECT b.booking_id,b.travelclass, f.* FROM bookings b JOIN flights f ON b.flight_id = f.flight_id WHERE b.user_id=$1`,[user_id]);
+    res.json(response.rows);
+  }catch(error){
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }

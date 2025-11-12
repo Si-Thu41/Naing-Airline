@@ -7,10 +7,10 @@ function Payment() {
             method: 'POST',
             credentials: 'include',
         });
-        navigate('/');
+        navigate('/bookingComplete');
     }
     return <div>Payment Page
-        <button onClick={handlePayment}>Confirm Payment</button>
+        <button className="bg-blue-600 rounded" onClick={handlePayment}>Confirm Payment</button>
     </div>;
 }
 export default Payment;

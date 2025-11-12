@@ -27,7 +27,7 @@ function App() {
       <Header />
       <main className='flex-1'>
         <BackgroundImageSlider images={backgroundAdsImages} />
-        <BookingTaskbar element1="Book A Flight" element2="My Booking" element3="MHupgrade" element4="Check-in" element5="Flight Status" element6="Flight Schedule" />
+        <BookingTaskbar element1="Book A Flight" element2="My Booking"  element3="Flight Status" element6="Flight Schedule" />
         <div className='mt-10'>
           <h1 className='text-bold text-4xl text-center'>Explore our destinations</h1>
           <div className='w-[50%] mx-auto grid grid-cols-2 gap-2 justify-items-center mt-10 mb-10'>

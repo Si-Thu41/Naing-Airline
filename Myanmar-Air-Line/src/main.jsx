@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import SearchFlightsResult from './SearchFlightsResult.jsx';
 import BookFlight from './BookingCompletion/BookFlight.jsx';
-import BookingComplete from './components/BookingComplete.jsx';
+import BookingComplete from './BookingCompletion/BookingComplete.jsx';
 import { BrowserRouter, Routes, Route } from "react-router";
 import Login from './components/login.jsx';
 import PrivateRoute from './PrivateRoute.jsx';

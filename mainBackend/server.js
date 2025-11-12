@@ -32,7 +32,10 @@ app.use(passport.session());
 const PORT = process.env.PORT;
 
 app.use("/api",router); //API routes
-
+app.get('/',(req,res)=>{
+  console.log(req.user);
+  res.send('Welcome to Myanmar Air Line Backend');
+});
 app.get('/auth/google',passport.authenticate('google',{
     scope:['profile','email']
 }));
@@ -90,24 +93,6 @@ app.get("/logout", (req, res) => {
       res.json({ message: "Logged out successfully" }); // Send a success response. Without this response, the client may hang, waiting for a reply.
     });
   });
-});
-
-app.post('/api/confirmBooking', async (req, res) => {
-  if(req.user){
-    const user_id= parseInt(req.user.user_id);
-    try{
-    const {name,passportNumber,flight_id,}=req.body;
-    const flightId=parseInt(flight_id);
-    const insertBookingQuery=await pool.query("INSERT INTO bookings (customername, passportnumber, flight_id, user_id) VALUES ($1,$2,$3,$4) RETURNING *",[name,passportNumber,flightId,user_id]);
-    res.json(insertBookingQuery.rows[0]);
-  }catch(error){
-    console.error('Error confirming booking:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-  }else{
-    res.status(401).json({ error: 'Unauthorized' });
-
-  }
 });
 
 app.get('/test-cookie', (req, res) => {
