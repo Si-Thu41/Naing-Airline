@@ -79,3 +79,13 @@ export const seeBookings= async (req,res)=>{
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
+export const getFlightStatus= async (req,res)=>{
+  try{
+    const {flightnumber}= req.query;
+    const response= await pool.query(`SELECT * FROM flights WHERE flightnumber=$1`,[flightnumber]);
+    res.json(response.rows[0]);
+  }catch(error){
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

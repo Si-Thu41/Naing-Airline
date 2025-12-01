@@ -1,6 +1,7 @@
 import SearchFlight from "./SearchFlight";
 import ShowBooking from "../Traveler/ShowBooking";
 import { useState } from "react";
+import FlightStatus from "./FlightStatus";
 
 function BookingTaskbar(props) {
   const elements = props;
@@ -21,7 +22,8 @@ function BookingTaskbar(props) {
       <div className="mt-4">
         {[
           <SearchFlight key="search" />,
-          <ShowBooking key="show" />
+          <ShowBooking key="show" />,
+          <FlightStatus key="status" />
         ][activeIndex]}
       </div>
   </div>;

@@ -16,8 +16,8 @@ function ErrorPage() {
         <div className="flex flex-col min-h-screen" >
             <Header />
             <main className="flex-1 flex flex-col justify-center items-center ">
-                <h1 className="font-bold text-3xl">Error {errorInfo.error.status || 404}</h1>
-                <p>{errorInfo.error.errorMessage || "Page not found"}</p>
+                <h1 className="font-bold text-3xl">Error {errorInfo.status || 404}</h1>
+                <p>{errorInfo.error || "Page not found"}</p>
                 <button onClick={handleNavigation} className="bg-blue-500 p-2 rounded-md text-white cursor-pointer hover:bg-blue-400" >Go to Homepage</button>
             </main>
             <Footer />

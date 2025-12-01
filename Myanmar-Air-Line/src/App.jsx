@@ -3,10 +3,11 @@ import Header from './components/Header';
 import BookingTaskbar from './components/BookingTaskbar';
 import BackgroundImageSlider from './components/BackgroundImageSlider';
 import Footer from './components/Footer';
-import Destinations from './components/Destinations';
+import Destinations from './Destinations/Destinations';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
-
+  const navigate=useNavigate();
   //Path for Background Advertisement BackgroundImage
   const backgroundAdsImages=[
     "/backgroundAds/background1.jpg",
@@ -27,7 +28,7 @@ function App() {
       <Header />
       <main className='flex-1'>
         <BackgroundImageSlider images={backgroundAdsImages} />
-        <BookingTaskbar element1="Book A Flight" element2="My Booking"  element3="Flight Status" element6="Flight Schedule" />
+        <BookingTaskbar element1="Book A Flight" element2="My Booking"  element3="Flight Status"  />
         <div className='mt-10'>
           <h1 className='text-bold text-4xl text-center'>Explore our destinations</h1>
           <div className='w-[50%] mx-auto grid grid-cols-2 gap-2 justify-items-center mt-10 mb-10'>
