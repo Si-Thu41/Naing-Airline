@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute.jsx';
 import ErrorPage from './Error.jsx';
 import Payment from './BookingCompletion/Payment.jsx';
 import City from './Destinations/City.jsx';
+import Promotion from './Navigation/Promotion.jsx';
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/payment" element={<PrivateRoute><Payment /></PrivateRoute>} />
       <Route path="/destinations" element={<PrivateRoute><City /></PrivateRoute>} />
+      <Route path="/promotions" element={<PrivateRoute><Promotion /></PrivateRoute>} />
     </Routes>
   </BrowserRouter>,
 )
