@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate, useLocation} from "react-router-dom";
 import { fetchCityList } from "../Functions/getCities";
+import { API_BASE_URL } from "../Functions/backendurl";
+
 
 function ShowBooking() {
     const navigate = useNavigate();
@@ -9,7 +11,7 @@ function ShowBooking() {
     const [cities, setCities] = React.useState([]);
     async function getBookings(){
         try{
-            const response= await fetch("http://localhost:3000/api/seeBookings",{
+            const response= await fetch(`${API_BASE_URL}/seeBookings`,{
                 method: 'GET',
                 credentials:'include'
             });

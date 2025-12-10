@@ -1,5 +1,7 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
+import { API_BASE_URL } from '../Functions/backendurl.js';
+
 function FlightStatus({ status }) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -7,7 +9,7 @@ function FlightStatus({ status }) {
     const [flightstatus, setStatus]=React.useState();
     async function fetchFlightStatus(flightnumber) {
         try{
-            const result =await fetch (`http://localhost:3000/api/flight-status?flightnumber=${flightnumber}`,{
+            const result =await fetch (`${API_BASE_URL}/flight-status?flightnumber=${flightnumber}`,{
             method: 'GET',
             credentials: 'include',
             headers: {

@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SearchFlight from './components/SearchFlight';
 import {MagnifyingGlass} from 'react-loader-spinner';
 import { fetchCityList } from './Functions/getCities';
+import { API_BASE_URL } from './Functions/backendurl';
 
 function SearchFlightsResult() {
     const location = useLocation();
@@ -24,7 +25,7 @@ function SearchFlightsResult() {
 
     async function fetchFlights() {
         try {
-            const response = await fetch(`http://localhost:3000/api/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.flightdate}`,{
+            const response = await fetch(`${API_BASE_URL}/searchFlight?from=${bookingdetails.from}&to=${bookingdetails.to}&departureDate=${bookingdetails.flightdate}`,{
                 method: "GET",
                 credentials: "include"
             });

@@ -5,6 +5,7 @@ import { fetchCityList } from '../Functions/getCities';
 import TravelerInfoForm from './TravelerInfoForm';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { API_BASE_URL } from '../Functions/backendurl';
 
 function BookFlight(){
     const location=useLocation();
@@ -17,7 +18,7 @@ function BookFlight(){
     const [allConfirmed,setAllConfirmed]=React.useState(false);
     async function fetchFlightById(flightId){
         try{
-            const response=await fetch(`http://localhost:3000/api/searchFlightById?flightId=${flightId}`,{
+            const response=await fetch(`${API_BASE_URL}/searchFlightById?flightId=${flightId}`,{
                 method: "GET",
                 credentials: "include"
             });

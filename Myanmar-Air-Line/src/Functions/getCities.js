@@ -1,8 +1,8 @@
-
+import { API_BASE_URL } from "./backendurl.js";
 export async function fetchCityList() {
         //fetch city list from backend
         try {
-            const response = await fetch("http://localhost:3000/api/cities", {
+            const response = await fetch(`${API_BASE_URL}/cities`, {
                 method: "GET",
                 credentials: "include"
             });

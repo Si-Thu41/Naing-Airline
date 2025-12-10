@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_BASE_URL } from "../Functions/backendurl.js";
 
 function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId,multiplePassenger,checkSavePassengerInfo,toggleConfirmButton}) {
     const [formData, setFormData] = React.useState({
@@ -25,7 +26,7 @@ function TravelerInfoForm({passengerNumber,flightType,travelClass,flightId,multi
             alert("Please fill all the required fields.");
             return;
         }
-        await fetch('http://localhost:3000/api/saveTravelerInfo', {
+        await fetch(`${API_BASE_URL}/saveTravelerInfo`, {
             method: 'POST',
             credentials: 'include',
             headers: {

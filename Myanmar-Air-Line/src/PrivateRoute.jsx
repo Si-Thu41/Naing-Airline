@@ -1,11 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import {Blocks} from "react-loader-spinner";
+import { API_BASE_URL } from './Functions/backendurl';
 
 function PrivateRoute({ children }) {
     const [isAuthenticated, setIsAuthenticated] = React.useState(null);
+    console.log("API_BASE_URL in PrivateRoute:", API_BASE_URL);
     React.useEffect(() => {
-    try{fetch("http://localhost:3000/checkAuth", {
+    try{fetch(`${API_BASE_URL}/checkAuth`, {
         method: "GET",
         credentials: "include"
     })
@@ -33,7 +35,7 @@ function PrivateRoute({ children }) {
   wrapperStyle={{}}
   wrapperClass="blocks-wrapper"
   visible={true}
-  />;
+  />
         </div>
     }
     return isAuthenticated ? children : <Navigate to="/login" replace />;

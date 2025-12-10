@@ -95,6 +95,7 @@ DATABASE=your_database_name
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+FRONT_END=your_frontend_url
 ```
 
 4. Start the backend:
@@ -114,12 +115,17 @@ cd Myanmar-Air-Line
 npm install
 ```
 
-3. Start the development server:
+3. Create .env file in your frontend. 
+```env
+VITE_API_URL=your_backend_api_url
+```
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open `http://localhost:5173` in your browser.
+5. Open `http://localhost:5173` in your browser.
 
 ---
 
@@ -129,7 +135,7 @@ npm run dev
 - `GET /auth/google` - Initiate Google OAuth login
 - `GET /auth/google/callback` - Google OAuth callback
 - `GET /logout` - Logout user
-- `GET /checkAuth` - Check if user is authenticated
+- `GET /api/checkAuth` - Check if user is authenticated
 
 ### Flights
 - `GET /api/cities` - Get all cities

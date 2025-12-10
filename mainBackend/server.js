@@ -8,10 +8,10 @@ import passport from 'passport';
 import pool from './db.js';
 
 dotenv.config();
-
+const frontendURL = process.env.FRONT_END || 'http://localhost:5173';
 const app = express();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: `${frontendURL}`,
   credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
@@ -58,9 +58,9 @@ passport.use('google',new GoogleOAuth.Strategy({
   }
 }));
 app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login' }),
+  passport.authenticate('google', { failureRedirect: `${frontendURL}/login` }),
   function(req, res) {
-    res.redirect('http://localhost:5173/'); // Successful authentication, redirect home.
+    res.redirect(`${frontendURL}/`); // Successful authentication, redirect home.
   });
 
   passport.serializeUser((user, done) => { // Storing user info in session
@@ -70,7 +70,7 @@ passport.deserializeUser((user, done) => { // Fetching user info from session
   done(null, user);
 });
 
-app.get("/checkAuth",(req,res)=>{
+app.get("/api/checkAuth",(req,res)=>{
   if(req.user){
     res.json({isLoggedIn:true,user:req.user});
   }else{

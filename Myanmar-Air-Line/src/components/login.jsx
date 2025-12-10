@@ -1,12 +1,13 @@
 import Footer from "./Footer";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from '../Functions/backendurl.js';
 
 function Login() {
     const [isAuthenticated, setIsAuthenticated] = React.useState(null);
     const navigate = useNavigate();
         React.useEffect(() => {
-        try{fetch("http://localhost:3000/checkAuth", {
+        try{fetch(`${API_BASE_URL}/checkAuth`, {
             method: "GET",
             credentials: "include"
         })
